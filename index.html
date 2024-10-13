@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مولد الأسئلة</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            direction: rtl;
+            text-align: right;
+            background-color: #f0f8ff;
+            /* لون الخلفية العام */
+        }
+        /* تنسيق الحاوية المركزية */
+        
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        /* تنسيق الأقسام */
+        
+        .section-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            max-height: 400px;
+            /* تحديد الارتفاع الأقصى */
+            overflow-y: auto;
+            /* تفعيل التمرير العمودي */
+        }
+        /* العنوان الرئيسي */
+        
+        .main-title {
+            color: #1f4e79;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        /* أزرار التحميل والتوليد والحفظ */
+        
+        .btn-primary {
+            background-color: #1f4e79;
+            border-color: #1f4e79;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        
+        .btn-primary:hover,
+        .btn-success:hover {
+            opacity: 0.9;
+        }
+        /* تنسيق textarea مع خاصية التمرير */
+        
+        textarea {
+            resize: none;
+            height: 150px;
+            overflow-y: auto;
+            /* تفعيل التمرير في textarea */
+        }
+    </style>
+    <!-- مكتبة Mammoth.js لقراءة ملفات DOCX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+    <!-- مكتبة PDF.js لقراءة ملفات PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+</head>
+
+<body>
+
+    <!-- الحاوية الرئيسية -->
+    <div class="main-container">
+        <h1 class="main-title">مولد الأسئلة</h1>
+
+        <!-- قسم رفع الملفات -->
+        <div class="section-container">
+            <h2 class="text-xl font-semibold mb-3">تحميل الملف</h2>
+            <div class="mb-3">
+                <input type="file" class="form-control" id="fileInput" accept=".pdf,.docx,.txt">
+            </div>
+            <button class="btn btn-primary w-full" onclick="loadFile()">تحميل الملف</button>
+        </div>
+
+        <!-- قسم عرض المحتوى -->
+        <div class="section-container">
+            <h2 class="text-xl font-semibold mb-3">محتوى الملف</h2>
+            <textarea class="form-control" id="fileContent" readonly></textarea>
+        </div>
+
+        <!-- إعدادات الأسئلة -->
+        <div class="section-container">
+            <h2 class="text-xl font-semibold mb-3">إعدادات الأسئلة</h2>
+
+            <div class="mb-3">
+                <label for="questionType" class="form-label">اختر نوع السؤال:</label>
+                <select class="form-select" id="questionType">
+                    <option value="definition">تعريفي</option>
+                    <option value="fill">أكمل الفراغ</option>
+                    <option value="truefalse">صح أو خطأ</option>
+                    <option value="essay">مقال</option>
+                    <option value="multiplechoice">اختيار من متعدد</option>
+                    <option value="numerical">عددي</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="questionCount" class="form-label">عدد الأسئلة:</label>
+                <input type="number" class="form-control" id="questionCount" value="5" min="1" max="100">
+            </div>
+
+            <button class="btn btn-success w-full" onclick="generateQuestions()">توليد الأسئلة</button>
+        </div>
+
+        <!-- الأسئلة المولدة -->
+        <div class="section-container">
+            <h2 class="text-xl font-semibold mb-3">الأسئلة المولدة</h2>
+            <textarea class="form-control" id="generatedQuestions" readonly></textarea>
+        </div>
+
+        <!-- زر الحفظ -->
+        <button class="btn btn-primary w-full" onclick="saveQuestions()">حفظ الأسئلة</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
